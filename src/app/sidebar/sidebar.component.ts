@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list'
 import { MainComponent } from '../main/main.component';
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
+import { SideContentComponent } from '../side-content/side-content.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,7 +16,7 @@ import { Subject } from 'rxjs';
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
-    MainComponent,
+    SideContentComponent,
     CommonModule
   ],
   templateUrl: './sidebar.component.html',
