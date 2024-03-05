@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list'
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { SideContentComponent } from '../side-content/side-content.component';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,7 +17,8 @@ import { SideContentComponent } from '../side-content/side-content.component';
     MatSidenavModule,
     MatListModule,
     SideContentComponent,
-    CommonModule
+    CommonModule,
+    RouterOutlet
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
@@ -26,6 +28,10 @@ export class SidebarComponent implements OnInit {
   @Input() isMobile = false;
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
   isCollapsed = true;
+
+  constructor(private router: Router) {
+
+  }
 
   ngOnInit(){
     this.changing.subscribe(v => { 
@@ -43,5 +49,9 @@ export class SidebarComponent implements OnInit {
     }
 
 }
+
+  navigate(route: any) {
+    this.router.navigate([route]);
+  }
 
 }
