@@ -3,7 +3,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list'
-import { MainComponent } from '../main/main.component';
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { SideContentComponent } from '../side-content/side-content.component';
@@ -25,8 +24,7 @@ import { SideContentComponent } from '../side-content/side-content.component';
 export class SidebarComponent implements OnInit { 
   @Input() changing!: Subject<boolean>;
   @Input() isMobile = false;
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
   isCollapsed = true;
 
   ngOnInit(){

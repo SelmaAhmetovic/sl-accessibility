@@ -1,12 +1,13 @@
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { MainComponent } from './main/main.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { SidebarComponent } from './core/sidebar/sidebar.component';
+import { MainComponent } from './core/main/main.component';
+import { ToolbarComponent } from './core/toolbar/toolbar.component';
 
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-root',
   standalone: true,
