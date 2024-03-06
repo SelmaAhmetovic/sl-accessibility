@@ -1,26 +1,46 @@
 import { Routes } from '@angular/router';
+import { ArticlesComponent } from './components/articles/articles.component';
+import { BlogsComponent } from './components/blogs/blogs.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
-// lazy-load standalone component
 export const routes: Routes = [
   {
     path: 'articles',
-    loadComponent: () => import('./components/articles/articles.component')
-      .then(mod => mod.ArticlesComponent)
+    children: [
+        { path: '', component: ArticlesComponent },
+        {
+            path: ':id',
+            loadComponent: () => import('./components/article/article.component')
+              .then(mod => mod.ArticleComponent)
+        },
+    ]
   }, 
   {
     path: 'blogs',
-    loadComponent: () => import('./components/blogs/blogs.component')
-      .then(mod => mod.BlogsComponent)
-  }, 
+    children: [
+        { path: '', component: BlogsComponent },
+        {
+            path: ':id',
+            loadComponent: () => import('./components/blog/blog.component')
+              .then(mod => mod.BlogComponent)
+        },
+    ]
+  },
   {
     path: 'reports',
-    loadComponent: () => import('./components/reports/reports.component')
-      .then(mod => mod.ReportsComponent)
-  }, 
+    children: [
+        { path: '', component: ReportsComponent },
+        {
+            path: ':id',
+            loadComponent: () => import('./components/report/report.component')
+              .then(mod => mod.ReportComponent)
+        },
+    ]
+  },
   {
     path: '',
     pathMatch: 'full',
-    loadComponent: () => import('./components/articles/articles.component').then(mod => mod.ArticlesComponent)
+    component: ArticlesComponent
   },
   ];
 

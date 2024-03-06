@@ -16,5 +16,14 @@ export class ArticlesService {
         responseType: 'json',
         withCredentials: false,
     });
-}
+  }
+
+  getArticleById(id: any): Observable<HttpResponse<any>> {
+    const uri = `https://api.spaceflightnewsapi.net/v4/articles/${id}/`;
+    return this.http.request<any>('get', uri, {
+        observe: 'response',
+        responseType: 'json',
+        withCredentials: false,
+    });
+  }
 }

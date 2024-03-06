@@ -1,36 +1,39 @@
 import { Component } from '@angular/core';
 import { BlogsService } from '../../services/blogs/blogs.service';
+import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-blogs',
+  selector: 'app-blog',
   standalone: true,
   imports: [
     MatCardModule, 
     CommonModule,
     MatIconModule
   ],
-  templateUrl: './blogs.component.html',
-  styleUrl: './blogs.component.scss'
+  templateUrl: './blog.component.html',
+  styleUrl: './blog.component.scss'
 })
-export class BlogsComponent {
+export class BlogComponent {
 
-  blogs: any;
+  id: any;
+  blog: any;
   constructor(private blogsService: BlogsService,
-              private router: Router) {
+              private route: ActivatedRoute) {
 
+  this.route.params.subscribe(
+    (params: any) => {
+      this.id = params.id;
+    });
+  
   }
+
   ngOnInit(): void {
-    this.blogsService.getBlogs().subscribe((response: any) => {
-      this.blogs = response.body.results;
+    this.blogsService.getBlogById(this.id).subscribe((response: any) => {
+      this.blog = response.body;
     })
-  }
-
-  navigateToBlog(id: number) {
-    this.router.navigate(['/blogs', id]);
   }
 
 }

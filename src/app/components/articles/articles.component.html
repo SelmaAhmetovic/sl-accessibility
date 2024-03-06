@@ -1,6 +1,7 @@
+ <h1 class="mt-2">Articles</h1>
  <div class="row w-100 ps-2">
     <div class="col-6 pt-2 pe-2" *ngFor="let article of articles">
-      <mat-card class="h-100">
+      <mat-card class="h-100" tabindex="0" (click)="navigateToArticle(article.id)">
         <mat-card-header>
           <mat-card-title>{{article.title}}</mat-card-title>
           <mat-card-subtitle>
