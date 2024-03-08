@@ -34,7 +34,7 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.changing.subscribe(v => { 
+    this.changing.subscribe(() => { 
       this.toggleMenu();
     });
   }
@@ -50,7 +50,7 @@ export class SidebarComponent implements OnInit {
 
 }
 
-  navigate(route: any) {
+  navigate(route: string) {
     this.router.navigate([route]);
   }
 

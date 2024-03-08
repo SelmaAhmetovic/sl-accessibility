@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BlogsService } from '../../services/blogs/blogs.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Blog } from '../../models/blog';
+
+import { HttpResponse } from '@angular/common/http';
+import { ResponseType } from '../../models/response-type';
 
 @Component({
   selector: 'app-blog',
@@ -16,23 +20,24 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.scss'
 })
-export class BlogComponent {
+export class BlogComponent implements OnInit {
 
-  id: any;
-  blog: any;
+  id: string = '';
+  blog: Blog | undefined;
   constructor(private blogsService: BlogsService,
               private route: ActivatedRoute) {
 
   this.route.params.subscribe(
-    (params: any) => {
-      this.id = params.id;
+    (params: Params) => {
+      this.id = params['id'];
     });
   
   }
 
   ngOnInit(): void {
-    this.blogsService.getBlogById(this.id).subscribe((response: any) => {
-      this.blog = response.body;
+    this.blogsService.getBlogById(this.id).subscribe((response: HttpResponse<ResponseType<Blog>>) => {
+      const blog: Blog = response?.body as unknown as Blog;
+      this.blog = blog;
     })
   }
 

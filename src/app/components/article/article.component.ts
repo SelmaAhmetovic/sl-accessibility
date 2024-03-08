@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { ArticlesService } from '../../services/articles/articles.service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Article } from '../../models/article';
+import { HttpResponse } from '@angular/common/http';
+import { ResponseType } from '../../models/response-type';
 
 @Component({
   selector: 'app-article',
@@ -18,21 +21,22 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 })
 export class ArticleComponent implements OnInit{
 
-  id: any;
-  article: any;
+  id: string = '';
+  article: Article | undefined;
   constructor(private articlesService: ArticlesService,
               private route: ActivatedRoute) {
 
   this.route.params.subscribe(
-    (params: any) => {
-      this.id = params.id;
+    (params: Params) => {
+      this.id = params['id'];
     });
   
   }
 
   ngOnInit(): void {
-    this.articlesService.getArticleById(this.id).subscribe((response: any) => {
-      this.article = response.body;
+    this.articlesService.getArticleById(this.id).subscribe((response:  HttpResponse<ResponseType<Article>>) => {
+      const article: Article = response?.body as unknown as Article;
+      this.article = article;
     })
   }
 

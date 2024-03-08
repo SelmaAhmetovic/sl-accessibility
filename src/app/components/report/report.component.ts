@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { ReportsService } from '../../services/reports/reports.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Report } from '../../models/report';
+import { HttpResponse } from '@angular/common/http';
+import { ResponseType } from '../../models/response-type';
 
 @Component({
   selector: 'app-report',
@@ -16,22 +19,23 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss'
 })
-export class ReportComponent {
-  id: any;
-  report: any;
+export class ReportComponent implements OnInit{
+  id: string = '';
+  report: Report | undefined;
   constructor(private reportsService: ReportsService,
               private route: ActivatedRoute) {
 
   this.route.params.subscribe(
-    (params: any) => {
-      this.id = params.id;
+    (params: Params) => {
+      this.id = params['id'];
     });
   
   }
 
   ngOnInit(): void {
-    this.reportsService.getReportById(this.id).subscribe((response: any) => {
-      this.report = response.body;
+    this.reportsService.getReportById(this.id).subscribe((response: HttpResponse<ResponseType<Report>>) => {
+      const report: Report = response.body as unknown as Report;
+      this.report = report;
     })
   }
 }

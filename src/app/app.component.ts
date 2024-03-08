@@ -3,7 +3,7 @@ import { MainComponent } from './core/main/main.component';
 import { ToolbarComponent } from './core/toolbar/toolbar.component';
 
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
@@ -20,7 +20,7 @@ import { Subject } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'material-responsive-sidenav';
   isMobile= true;
   changingValue: Subject<boolean> = new Subject();
@@ -37,7 +37,7 @@ export class AppComponent {
     });
   }
 
-  toggleMenu($event?: any) {
+  toggleMenu() {
     this.changingValue.next(true);
   }
 
