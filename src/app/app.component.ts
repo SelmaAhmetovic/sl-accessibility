@@ -1,9 +1,9 @@
-import { SidebarComponent } from './core/sidebar/sidebar.component';
-import { MainComponent } from './core/main/main.component';
-import { ToolbarComponent } from './core/toolbar/toolbar.component';
+//import { SidebarComponent } from './core/sidebar/sidebar.component';
+//import { MainComponent } from './core/main/main.component';
+//import { ToolbarComponent } from './core/toolbar/toolbar.component';
 
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, ViewChild } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { Subject, Subscription } from 'rxjs';
@@ -36,7 +36,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnDestroy{
   title = 'material-responsive-sidenav';
   //isMobile= true;
   changingValue: Subject<boolean> = new Subject();
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
   constructor(private observer: BreakpointObserver,
               private router: Router) {
-                
+
     this.breakpointSubscription =this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
     if(screenSize.matches){
       this.isMobile = true;
@@ -58,10 +58,6 @@ export class AppComponent implements OnInit, OnDestroy{
       this.isMobile = false;
      }
     });
-  }
-
-  ngOnInit() {
-    
   }
 
   ngOnDestroy(): void {

@@ -11,7 +11,6 @@ import { environment } from '../../../environments/environment.development';
   providedIn: 'root'
 })
 export class ArticlesService {
-  envionment: any;
 
   constructor(private readonly http: HttpClient) { }
 

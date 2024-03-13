@@ -1,10 +1,10 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { PreloadAllModules, provideRouter, withDebugTracing, withPreloading } from '@angular/router';
+import { ApplicationConfig } from '@angular/core';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
-import { COMMON_MODULES, MAT_MODULES } from './common-modules';
+//import { COMMON_MODULES, MAT_MODULES } from './common-modules';
 
 // PreloadAllModules: 
 /*Angular will preload all lazy-loaded modules in the background, after the initial bundle

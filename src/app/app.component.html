@@ -3,8 +3,8 @@
 
 
 <mat-toolbar color="primary">
-    <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()" (keydown)="checkKeyboardPress($event)" aria-hidden="true">
-        <mat-icon>menu</mat-icon>
+    <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()" (keydown)="checkKeyboardPress($event)" aria-hidden="true" tabindex="-1">
+        <mat-icon aria-hidden="true">menu</mat-icon>
       </button>
     <h1 tabindex="0">
       <img src="https://spaceflightnewsapi.net/img/SNAPI_logo.png" alt="SNAPI Logo" 

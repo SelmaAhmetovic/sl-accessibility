@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, ViewChild, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
@@ -23,7 +23,7 @@ import { Router, RouterOutlet } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements OnInit, OnDestroy { 
+export class SidebarComponent implements OnDestroy { 
   @Input() changing!: Subject<boolean>;
   @Input() isMobile = false;
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
@@ -35,10 +35,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.subscription = this.changing.subscribe(() => { 
       this.toggleMenu();
     });
-  }
-
-  ngOnInit(){
-    
   }
 
   ngOnDestroy(): void {

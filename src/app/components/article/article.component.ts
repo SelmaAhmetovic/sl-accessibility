@@ -8,7 +8,7 @@ import { Article } from '../../models/article';
 import { HttpResponse } from '@angular/common/http';
 import { ResponseType } from '../../models/response-type';
 
-import { BrowserModule, Title } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { A11yModule, LiveAnnouncer } from '@angular/cdk/a11y';
 @Component({
   selector: 'app-article',
