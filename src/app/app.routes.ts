@@ -10,7 +10,7 @@ export const routes: Routes = [
     children: [
         { path: '', component: ArticlesComponent,  title: 'List of all articles' },
         {
-            path: ':id',
+            path: ':id', title: 'Article',
             loadComponent: () => import('./components/article/article.component')
               .then(mod => mod.ArticleComponent)
         },
@@ -21,7 +21,7 @@ export const routes: Routes = [
     children: [
         { path: '', component: BlogsComponent , title: 'List of all blogs'},
         {
-            path: ':id',
+            path: ':id', title: 'Blog',
             loadComponent: () => import('./components/blog/blog.component')
               .then(mod => mod.BlogComponent)
         },
@@ -32,7 +32,7 @@ export const routes: Routes = [
     children: [
         { path: '', component: ReportsComponent, title: 'List of all reports' },
         {
-            path: ':id',  
+            path: ':id',  title: 'Report',
             loadComponent: () => import('./components/report/report.component')
               .then(mod => mod.ReportComponent)
         },

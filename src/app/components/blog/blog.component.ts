@@ -8,6 +8,7 @@ import { Blog } from '../../models/blog';
 
 import { HttpResponse } from '@angular/common/http';
 import { ResponseType } from '../../models/response-type';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-blog',
@@ -25,7 +26,8 @@ export class BlogComponent implements OnInit {
   id: string = '';
   blog: Blog | undefined;
   constructor(private blogsService: BlogsService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private titleService: Title) {
 
   this.route.params.subscribe(
     (params: Params) => {
@@ -38,6 +40,7 @@ export class BlogComponent implements OnInit {
     this.blogsService.getBlogById(this.id).subscribe((response: HttpResponse<ResponseType<Blog>>) => {
       const blog: Blog = response?.body as unknown as Blog;
       this.blog = blog;
+      this.titleService.setTitle('Article ' + blog?.title);
     })
   }
 

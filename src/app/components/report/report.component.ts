@@ -7,6 +7,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Report } from '../../models/report';
 import { HttpResponse } from '@angular/common/http';
 import { ResponseType } from '../../models/response-type';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-report',
@@ -23,7 +24,8 @@ export class ReportComponent implements OnInit{
   id: string = '';
   report: Report | undefined;
   constructor(private reportsService: ReportsService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private titleService: Title) {
 
   this.route.params.subscribe(
     (params: Params) => {
@@ -36,6 +38,7 @@ export class ReportComponent implements OnInit{
     this.reportsService.getReportById(this.id).subscribe((response: HttpResponse<ResponseType<Report>>) => {
       const report: Report = response.body as unknown as Report;
       this.report = report;
+      this.titleService.setTitle('Article ' + report?.title);
     })
   }
 }
