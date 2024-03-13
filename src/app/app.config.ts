@@ -12,9 +12,11 @@ import { provideHttpClient } from '@angular/common/http';
  This can help improve the perceived performance of the application by reducing the delay when 
  navigating to lazy-loaded routes.*/
 
+
+ // provideRouter(routes, withPreloading(PreloadAllModules)),
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes,  withPreloading(PreloadAllModules)), 
+    provideRouter(routes), 
     provideAnimationsAsync(), 
     provideHttpClient()
   ]
