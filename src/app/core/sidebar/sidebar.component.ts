@@ -54,4 +54,15 @@ export class SidebarComponent implements OnInit {
     this.router.navigate([route]);
   }
 
+  
+  checkKeyboardPress(event: KeyboardEvent, route: string){
+    if(event.key === "Enter") {
+      this.navigate(route)
+      return;
+    }
+    if(event.key === "Tab") {
+      return;
+    }
+  }
+
 }

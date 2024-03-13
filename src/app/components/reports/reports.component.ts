@@ -39,4 +39,14 @@ export class ReportsComponent implements OnInit {
     this.router.navigate(['/reports', id]);
   }
 
+  checkKeyboardPress(event: KeyboardEvent, id: number){
+    if(event.key === "Enter") {
+      this.navigateToReport(id)
+      return;
+    }
+    if(event.key === "Tab") {
+      return;
+    }
+  }
+
 }

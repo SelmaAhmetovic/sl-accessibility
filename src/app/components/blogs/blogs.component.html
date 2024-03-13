@@ -1,7 +1,7 @@
 <h1 class="mt-2">Blogs</h1>
 <div class="row w-100 ps-2">
    <div class="col-6 pt-2 pe-2" *ngFor="let blog of blogs">
-     <mat-card class="h-100" tabindex="0" (click)="navigateToBlog(blog.id)">
+     <mat-card class="h-100" tabindex="0" (click)="navigateToBlog(blog.id)"  (keydown)="checkKeyboardPress($event, blog.id)">
        <mat-card-header>
          <mat-card-title>{{blog?.title}}</mat-card-title>
          <mat-card-subtitle>
@@ -9,7 +9,7 @@
          </mat-card-subtitle>
        </mat-card-header>
        <mat-card-content>
-         <img style = "height: 100px; width: 100px;" [src]="blog?.image_url">
+         <img style = "height: 100px; width: 100px;" [src]="blog?.image_url" [alt]="blog?.image_url">
        </mat-card-content>
        <mat-card-actions>
          <button mat-button>

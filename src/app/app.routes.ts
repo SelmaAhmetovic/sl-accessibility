@@ -3,11 +3,12 @@ import { ArticlesComponent } from './components/articles/articles.component';
 import { BlogsComponent } from './components/blogs/blogs.component';
 import { ReportsComponent } from './components/reports/reports.component';
 
+
 export const routes: Routes = [
   {
     path: 'articles',
     children: [
-        { path: '', component: ArticlesComponent },
+        { path: '', component: ArticlesComponent,  title: 'List of all articles' },
         {
             path: ':id',
             loadComponent: () => import('./components/article/article.component')
@@ -18,7 +19,7 @@ export const routes: Routes = [
   {
     path: 'blogs',
     children: [
-        { path: '', component: BlogsComponent },
+        { path: '', component: BlogsComponent , title: 'List of all blogs'},
         {
             path: ':id',
             loadComponent: () => import('./components/blog/blog.component')
@@ -29,9 +30,9 @@ export const routes: Routes = [
   {
     path: 'reports',
     children: [
-        { path: '', component: ReportsComponent },
+        { path: '', component: ReportsComponent, title: 'List of all reports' },
         {
-            path: ':id',
+            path: ':id',  
             loadComponent: () => import('./components/report/report.component')
               .then(mod => mod.ReportComponent)
         },
@@ -43,6 +44,7 @@ export const routes: Routes = [
     component: ArticlesComponent
   },
   ];
+
 
 
 //   {

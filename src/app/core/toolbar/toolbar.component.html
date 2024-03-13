@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
+    <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()" (keydown)="checkKeyboardPress($event)">
         <mat-icon>menu</mat-icon>
       </button>
     <h1>

@@ -39,4 +39,14 @@ export class BlogsComponent implements OnInit {
     this.router.navigate(['/blogs', id]);
   }
 
+  checkKeyboardPress(event: KeyboardEvent, id: number){
+    if(event.key === "Enter") {
+      this.navigateToBlog(id)
+      return;
+    }
+    if(event.key === "Tab") {
+      return;
+    }
+  }
+
 }

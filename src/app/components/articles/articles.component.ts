@@ -48,8 +48,6 @@ export class ArticlesComponent implements OnInit {
     if(event.key === "Tab") {
       return;
     }
-  
-  
-    }
+  }
 
 }
