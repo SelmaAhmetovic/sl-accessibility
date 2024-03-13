@@ -5,6 +5,8 @@ import { ResponseType } from '../../models/response-type';
 import { Blog } from '../../models/blog';
 import { ResultsType } from '../../models/results-type';
 
+import { environment } from '../../../environments/environment.development';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +15,7 @@ export class BlogsService {
   constructor(private readonly http: HttpClient) { }
 
   getBlogs(): Observable<HttpResponse<ResponseType<ResultsType>>> {
-    const uri = `https://api.spaceflightnewsapi.net/v4/blogs/`;
+    const uri = environment.apiUrl + `/blogs/`;
     return this.http.request<ResponseType<ResultsType>>('get', uri, {
         observe: 'response',
         responseType: 'json',
@@ -22,7 +24,7 @@ export class BlogsService {
   }
 
   getBlogById(id: string): Observable<HttpResponse<ResponseType<Blog>>> {
-    const uri = `https://api.spaceflightnewsapi.net/v4/blogs/${id}/`;
+    const uri = environment.apiUrl + `/blogs/${id}/`;
     return this.http.request<ResponseType<Blog>>('get', uri, {
         observe: 'response',
         responseType: 'json',

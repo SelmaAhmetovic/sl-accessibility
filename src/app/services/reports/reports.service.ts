@@ -5,6 +5,7 @@ import { ResponseType } from '../../models/response-type';
 import { ResultsType } from '../../models/results-type';
 import { Report } from '../../models/report';
 
+import { environment } from '../../../environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +14,7 @@ export class ReportsService {
   constructor(private readonly http: HttpClient) { }
 
   getReports(): Observable<HttpResponse<ResponseType<ResultsType>>> {
-    const uri = `https://api.spaceflightnewsapi.net/v4/reports/`;
+    const uri = environment.apiUrl + `/reports/`;
     return this.http.request<ResponseType<ResultsType>>('get', uri, {
         observe: 'response',
         responseType: 'json',
@@ -22,7 +23,7 @@ export class ReportsService {
   }
 
   getReportById(id: string): Observable<HttpResponse<ResponseType<Report>>> {
-    const uri = `https://api.spaceflightnewsapi.net/v4/reports/${id}/`;
+    const uri =environment.apiUrl + `/reports/${id}/`;
     return this.http.request<ResponseType<Report>>('get', uri, {
         observe: 'response',
         responseType: 'json',
