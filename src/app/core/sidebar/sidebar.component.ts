@@ -1,10 +1,10 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list'
 import { CommonModule } from '@angular/common';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { SideContentComponent } from '../side-content/side-content.component';
 import { Router, RouterOutlet } from '@angular/router';
 
@@ -23,20 +23,28 @@ import { Router, RouterOutlet } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements OnInit { 
+export class SidebarComponent implements OnInit, OnDestroy { 
   @Input() changing!: Subject<boolean>;
   @Input() isMobile = false;
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
   isCollapsed = true;
 
-  constructor(private router: Router) {
+  subscription: Subscription;
 
+  constructor(private router: Router) {
+    this.subscription = this.changing.subscribe(() => { 
+      this.toggleMenu();
+    });
   }
 
   ngOnInit(){
-    this.changing.subscribe(() => { 
-      this.toggleMenu();
-    });
+    
+  }
+
+  ngOnDestroy(): void {
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   toggleMenu() {
