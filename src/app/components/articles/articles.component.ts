@@ -10,6 +10,8 @@ import { ResponseType } from '../../models/response-type';
 import { HttpResponse } from '@angular/common/http';
 import { ResultsType } from '../../models/results-type';
 import { map } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-articles',
@@ -17,7 +19,9 @@ import { map } from 'rxjs';
   imports: [
     MatCardModule,
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule,
+    MatDividerModule,
   ],
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.scss'
