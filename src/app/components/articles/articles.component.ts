@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { ArticlesService } from '../../services/articles/articles.service';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,12 +9,13 @@ import { Article } from '../../models/article';
 import { ResponseType } from '../../models/response-type';
 import { HttpResponse } from '@angular/common/http';
 import { ResultsType } from '../../models/results-type';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-articles',
   standalone: true,
   imports: [
-    MatCardModule, 
+    MatCardModule,
     CommonModule,
     MatIconModule
   ],
@@ -23,9 +24,14 @@ import { ResultsType } from '../../models/results-type';
 })
 export class ArticlesComponent implements OnInit {
 
+  articles$ = this.articlesService.getArticlesV2()
+    .pipe(
+      map(r => r.results)
+    );
+
   articles: Article[] | undefined;
   constructor(private articlesService: ArticlesService,
-              private router: Router) {
+    private router: Router) {
 
   }
   ngOnInit(): void {
@@ -40,12 +46,12 @@ export class ArticlesComponent implements OnInit {
     this.router.navigate(['/articles', id]);
   }
 
-  checkKeyboardPress(event: KeyboardEvent, id: number){
-    if(event.key === "Enter") {
+  checkKeyboardPress(event: KeyboardEvent, id: number) {
+    if (event.key === "Enter") {
       this.navigateToArticle(id)
       return;
     }
-    if(event.key === "Tab") {
+    if (event.key === "Tab") {
       return;
     }
   }
