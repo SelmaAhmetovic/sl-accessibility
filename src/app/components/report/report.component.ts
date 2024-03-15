@@ -6,7 +6,7 @@ import { ReportsService } from '../../services/reports/reports.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Report } from '../../models/report';
 import { Title } from '@angular/platform-browser';
-import { Subscription, map } from 'rxjs';
+import { Subscription, map, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -21,28 +21,15 @@ import { Subscription, map } from 'rxjs';
 })
 export class ReportComponent {
   id: string = '';
-  report: Report | undefined;
+  report$ = this.route.params.pipe(
+    map((x) => x['id']),
+    switchMap((id) =>  this.reportsService.getReportById(id)),
+    tap((report: Report) => this.titleService.setTitle('Report ' + report?.title))
+  );
 
   constructor(private reportsService: ReportsService,
               private route: ActivatedRoute,
-              private titleService: Title) {
-
-                this.route.params.subscribe(
-                  (params: Params) => {
-                    this.id = params['id'];
-                    if(this.id) {
-                      const subscription: Subscription = this.reportsService.getReportById(this.id)
-                      .pipe(
-                        map(r => r)).subscribe(
-                          (response: Report) => {
-                            this.report = response;
-                            this.titleService.setTitle('Report ' + this.report?.title);
-                            subscription.unsubscribe();
-                          }
-                        );
-                      }
-                    });
-                
+              private titleService: Title) {             
                 }
 
 }

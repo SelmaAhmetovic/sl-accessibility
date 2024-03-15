@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Article } from '../../models/article';
 import { Title } from '@angular/platform-browser';
 import { A11yModule, LiveAnnouncer } from '@angular/cdk/a11y';
-import { map, switchMap } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-article',
@@ -28,7 +28,11 @@ export class ArticleComponent {
 
   article$ = this.route.params.pipe(
     map((x) => x['id']),
-    switchMap((id) => this.articlesService.getArticleById(id))
+    switchMap((id) => this.articlesService.getArticleById(id)),
+    tap((article: Article) => {
+      this.titleService.setTitle('Article ' + article?.title);
+      this.announcer.announce('Article ' + article?.title);
+    })
   );
 
   constructor(

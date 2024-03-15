@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Blog } from '../../models/blog';
 
 import { Title } from '@angular/platform-browser';
-import { Subscription, map } from 'rxjs';
+import { Subscription, map, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-blog',
@@ -24,27 +24,15 @@ export class BlogComponent {
 
   id: string = '';
   blog: Blog | undefined;
-  
+
+  blog$ = this.route.params.pipe(
+    map((x) => x['id']),
+    switchMap((id) =>  this.blogsService.getBlogById(id)),
+    tap((blog: Blog) => this.titleService.setTitle('Blog ' + blog?.title))
+  );
+
   constructor(private blogsService: BlogsService,
               private route: ActivatedRoute,
-              private titleService: Title) {
-
-                this.route.params.subscribe(
-                  (params: Params) => {
-                    this.id = params['id'];
-                    if(this.id) {
-                      const subscription: Subscription = this.blogsService.getBlogById(this.id)
-                      .pipe(
-                        map(r => r)).subscribe(
-                          (response: Blog) => {
-                            this.blog = response;
-                            this.titleService.setTitle('Blog ' + this.blog?.title);
-                            subscription.unsubscribe();
-                          }
-                        );
-                      }
-                    });
-                
-                }
+              private titleService: Title) { }
 
 }
