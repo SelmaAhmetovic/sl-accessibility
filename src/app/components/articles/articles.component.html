@@ -1,55 +1,58 @@
-<h1 class="mt-2">Articles</h1>
-<div class="row w-100 ps-2">
-  <ng-container *ngIf="articles$ | async as articlesNew">
-    @for(article of articlesNew; track article.id) {
-    <div class="col-12 col-sm-6 col-md-3 pt-2 pe-2">
-      <mat-card
-        class="h-100"
-        tabindex="0"
-        (click)="navigateToArticle(article.id)"
-        (keydown)="checkKeyboardPress($event, article.id)"
-      >
-        <mat-card-header class="mb-3">
-          <mat-card-title>{{ article?.title }}</mat-card-title>
-          <mat-card-subtitle>
-           {{article.published_at | date: 'dd.MM.yyyy'}}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <img
 
-            [src]="article?.image_url"
-            [alt]="article?.image_url"
-          />
-        <mat-card-content>
+<div class="container-fluid pt-5">
+  <h1>Articles</h1>
+  <div class="row">
+    <ng-container *ngIf="articles$ | async as articlesNew">
+      @for(article of articlesNew; track article.id) {
+      <div class="col-12 col-sm-6 col-md-3 pt-2 pe-2">
+        <mat-card
+          class="h-100"
+          tabindex="0"
+          (click)="navigateToArticle(article.id)"
+          (keydown)="checkKeyboardPress($event, article.id)"
+        >
+          <mat-card-header class="mb-3">
+            <mat-card-title>{{ article?.title }}</mat-card-title>
+            <mat-card-subtitle>
+             {{article.published_at | date: 'dd.MM.yyyy'}}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <img
+
+              [src]="article?.image_url"
+              [alt]="article?.image_url"
+            />
+          <mat-card-content>
 
 
-          <p class="py-3">
-            {{ article?.summary }}
-          </p>
+            <p class="py-3">
+              {{ article?.summary }}
+            </p>
 
-          <mat-divider></mat-divider>
-        </mat-card-content>
-        <mat-card-actions>
+            <mat-divider></mat-divider>
+          </mat-card-content>
+          <mat-card-actions>
 
-          <button
-            mat-button
-            role="button"
-            aria-label="like button"
-          >
-            <mat-icon>thumb_up</mat-icon>
-          </button>
-          <button
-            mat-button
-            role="button"
-            aria-label="share button"
-          >
-            <mat-icon>share</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-    } @empty {
-    <li>There are no items.</li>
-    }
-  </ng-container>
+            <button
+              mat-button
+              role="button"
+              aria-label="like button"
+            >
+              <mat-icon>thumb_up</mat-icon>
+            </button>
+            <button
+              mat-button
+              role="button"
+              aria-label="share button"
+            >
+              <mat-icon>share</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      } @empty {
+      <li>There are no items.</li>
+      }
+    </ng-container>
+  </div>
 </div>
