@@ -1,9 +1,8 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseType } from '../../models/response-type';
 import { Blog } from '../../models/blog';
-import { ResultsType } from '../../models/results-type';
+import { SpaceFlightNewsApiResponseBlogGet } from '../../models/space-flight-news-api-reponse';
 
 import { environment } from '../../../environments/environment.development';
 
@@ -11,24 +10,17 @@ import { environment } from '../../../environments/environment.development';
   providedIn: 'root'
 })
 export class BlogsService {
+  
+  url = environment.apiUrl + `/blogs`;
 
   constructor(private readonly http: HttpClient) { }
 
-  getBlogs(): Observable<HttpResponse<ResponseType<ResultsType>>> {
-    const uri = environment.apiUrl + `/blogs/`;
-    return this.http.request<ResponseType<ResultsType>>('get', uri, {
-        observe: 'response',
-        responseType: 'json',
-        withCredentials: false,
-    });
+  getBlogs(): Observable<SpaceFlightNewsApiResponseBlogGet> {
+    return this.http.get<SpaceFlightNewsApiResponseBlogGet>(this.url);
   }
 
-  getBlogById(id: string): Observable<HttpResponse<ResponseType<Blog>>> {
-    const uri = environment.apiUrl + `/blogs/${id}/`;
-    return this.http.request<ResponseType<Blog>>('get', uri, {
-        observe: 'response',
-        responseType: 'json',
-        withCredentials: false,
-    });
+  getBlogById(id: string): Observable<Blog> {
+    const uri =  this.url + `/${id}/`;
+    return this.http.get<Blog>(uri);
   }
 }

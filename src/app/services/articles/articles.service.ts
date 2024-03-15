@@ -1,8 +1,7 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseType } from '../../models/response-type';
-import { ResultsType, SpaceFlightNewsApiResponseArticlesGet } from '../../models/results-type';
+import { SpaceFlightNewsApiResponseArticlesGet } from '../../models/space-flight-news-api-reponse';
 import { Article } from '../../models/article';
 import { environment } from '../../../environments/environment.development';
 
@@ -16,25 +15,12 @@ export class ArticlesService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getArticles(): Observable<HttpResponse<ResponseType<ResultsType>>> {
-    const uri = environment.apiUrl + `/articles/`;
-    return this.http.request<ResponseType<ResultsType>>('get', uri, {
-        observe: 'response',
-        responseType: 'json',
-        withCredentials: false,
-    });
-  }
-
-  getArticlesV2(): Observable<SpaceFlightNewsApiResponseArticlesGet> {
+  getArticles(): Observable<SpaceFlightNewsApiResponseArticlesGet> {
     return this.http.get<SpaceFlightNewsApiResponseArticlesGet>(this.url);
   }
 
-  getArticleById(id: string): Observable<HttpResponse<ResponseType<Article>>> {
-    const uri =  environment.apiUrl + `/articles/${id}/`;
-    return this.http.request<ResponseType<Article>>('get', uri, {
-        observe: 'response',
-        responseType: 'json',
-        withCredentials: false,
-    });
+  getArticleById(id: string): Observable<Article> {
+    const uri =  this.url + `/${id}/`;
+    return this.http.get<Article>(uri);
   }
 }

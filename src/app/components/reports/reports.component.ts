@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReportsService } from '../../services/reports/reports.service';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { Report } from '../../models/report';
-import { HttpResponse } from '@angular/common/http';
-import { ResponseType } from '../../models/response-type';
-import { ResultsType } from '../../models/results-type';
+import { MatDividerModule } from '@angular/material/divider';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-reports',
@@ -15,24 +13,23 @@ import { ResultsType } from '../../models/results-type';
   imports: [
     MatCardModule, 
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MatDividerModule
   ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss'
 })
-export class ReportsComponent implements OnInit {
+export class ReportsComponent {
 
-  reports: Report[] | undefined;
+  
+  reports$ = this.reportsService.getReports()
+    .pipe(
+      map(r => r.results)
+    );
+
   constructor(private reportsService: ReportsService,
               private router: Router) {
 
-  }
-  ngOnInit(): void {
-    this.reportsService.getReports().subscribe((response: HttpResponse<ResponseType<ResultsType>>) => {
-      const obj: ResultsType = response?.body as unknown as ResultsType;
-      const newObj: Report[] = obj.results as Report[];
-      this.reports = newObj;
-    })
   }
 
   navigateToReport(id: number) {

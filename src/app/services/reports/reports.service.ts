@@ -1,8 +1,7 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseType } from '../../models/response-type';
-import { ResultsType } from '../../models/results-type';
+import { SpaceFlightNewsApiResponseReportGet } from '../../models/space-flight-news-api-reponse';
 import { Report } from '../../models/report';
 
 import { environment } from '../../../environments/environment.development';
@@ -11,23 +10,16 @@ import { environment } from '../../../environments/environment.development';
 })
 export class ReportsService {
 
+  url = environment.apiUrl + `/reports`;
   constructor(private readonly http: HttpClient) { }
 
-  getReports(): Observable<HttpResponse<ResponseType<ResultsType>>> {
-    const uri = environment.apiUrl + `/reports/`;
-    return this.http.request<ResponseType<ResultsType>>('get', uri, {
-        observe: 'response',
-        responseType: 'json',
-        withCredentials: false,
-    });
+
+  getReports(): Observable<SpaceFlightNewsApiResponseReportGet> {
+    return this.http.get<SpaceFlightNewsApiResponseReportGet>(this.url);
   }
 
-  getReportById(id: string): Observable<HttpResponse<ResponseType<Report>>> {
-    const uri =environment.apiUrl + `/reports/${id}/`;
-    return this.http.request<ResponseType<Report>>('get', uri, {
-        observe: 'response',
-        responseType: 'json',
-        withCredentials: false,
-    });
+  getReportById(id: string): Observable<Report> {
+    const uri =  this.url + `/${id}/`;
+    return this.http.get<Report>(uri);
   }
 }

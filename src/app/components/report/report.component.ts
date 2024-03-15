@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { ReportsService } from '../../services/reports/reports.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Report } from '../../models/report';
-import { HttpResponse } from '@angular/common/http';
-import { ResponseType } from '../../models/response-type';
 import { Title } from '@angular/platform-browser';
+import { Subscription, map } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -20,25 +19,30 @@ import { Title } from '@angular/platform-browser';
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss'
 })
-export class ReportComponent implements OnInit{
+export class ReportComponent {
   id: string = '';
   report: Report | undefined;
+
   constructor(private reportsService: ReportsService,
               private route: ActivatedRoute,
               private titleService: Title) {
 
-  this.route.params.subscribe(
-    (params: Params) => {
-      this.id = params['id'];
-    });
-  
-  }
+                this.route.params.subscribe(
+                  (params: Params) => {
+                    this.id = params['id'];
+                    if(this.id) {
+                      const subscription: Subscription = this.reportsService.getReportById(this.id)
+                      .pipe(
+                        map(r => r)).subscribe(
+                          (response: Report) => {
+                            this.report = response;
+                            this.titleService.setTitle('Report ' + this.report?.title);
+                            subscription.unsubscribe();
+                          }
+                        );
+                      }
+                    });
+                
+                }
 
-  ngOnInit(): void {
-    this.reportsService.getReportById(this.id).subscribe((response: HttpResponse<ResponseType<Report>>) => {
-      const report: Report = response.body as unknown as Report;
-      this.report = report;
-      this.titleService.setTitle('Article ' + report?.title);
-    })
-  }
 }
