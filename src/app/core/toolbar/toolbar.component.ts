@@ -31,4 +31,14 @@ export class ToolbarComponent {
   toggleMenu() {
     this.toogleMenuEmitter.next('emitted')
   }
+
+  checkKeyboardPress(event: KeyboardEvent){
+    if(event.key === "Enter") {
+      this.toggleMenu()
+      return;
+    }
+    if(event.key === "Tab") {
+      return;
+    }
+  }
 }

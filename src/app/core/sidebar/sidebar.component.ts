@@ -1,12 +1,12 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list'
-import { MainComponent } from '../main/main.component';
 import { CommonModule } from '@angular/common';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { SideContentComponent } from '../side-content/side-content.component';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,22 +17,30 @@ import { SideContentComponent } from '../side-content/side-content.component';
     MatSidenavModule,
     MatListModule,
     SideContentComponent,
-    CommonModule
+    CommonModule,
+    RouterOutlet
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements OnInit { 
+export class SidebarComponent implements OnDestroy { 
   @Input() changing!: Subject<boolean>;
   @Input() isMobile = false;
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
+  @ViewChild(MatSidenav) sidenav!: MatSidenav;
   isCollapsed = true;
 
-  ngOnInit(){
-    this.changing.subscribe(v => { 
+  subscription: Subscription;
+
+  constructor(private router: Router) {
+    this.subscription = this.changing.subscribe(() => { 
       this.toggleMenu();
     });
+  }
+
+  ngOnDestroy(): void {
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   toggleMenu() {
@@ -45,5 +53,20 @@ export class SidebarComponent implements OnInit {
     }
 
 }
+
+  navigate(route: string) {
+    this.router.navigate([route]);
+  }
+
+  
+  checkKeyboardPress(event: KeyboardEvent, route: string){
+    if(event.key === "Enter") {
+      this.navigate(route)
+      return;
+    }
+    if(event.key === "Tab") {
+      return;
+    }
+  }
 
 }

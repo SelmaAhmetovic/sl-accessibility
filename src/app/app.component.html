@@ -1,3 +1,52 @@
- <app-toolbar (toogleMenuEmitter)="toggleMenu($event)"></app-toolbar> 
- <app-sidebar [isMobile]="isMobile" [changing]="changingValue"></app-sidebar> 
+ <!-- <app-toolbar (toogleMenuEmitter)="toggleMenu()"></app-toolbar> 
+ <app-sidebar [isMobile]="isMobile" [changing]="changingValue"></app-sidebar>  -->
+
+
+<mat-toolbar color="primary">
+    <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()" (keydown)="checkKeyboardPress($event)" aria-hidden="true" tabindex="-1">
+        <mat-icon aria-hidden="true">menu</mat-icon>
+      </button>
+    <h1 tabindex="0">
+      <img src="https://spaceflightnewsapi.net/img/SNAPI_logo.png" alt="SNAPI Logo" 
+      class="ml-2 logo-img">
+      Spaceflight News
+    </h1>
+</mat-toolbar>
+
+
+<mat-sidenav-container autosize>
+    <mat-sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="isMobile ? 'false' : 'true'">
+      <mat-nav-list aria-label="Articles"  tabindex="0" (keydown)="checkKeyboardPress($event, '/articles')">
+        <a mat-list-item (click)="navigate('/articles')">
+          <span class="entry">
+            <mat-icon>house</mat-icon>
+            <span *ngIf="!isCollapsed">Articles</span>
+          </span>
+        </a>
+      </mat-nav-list>
+  
+      <mat-nav-list tabindex="0" aria-label="Blogs" tabindex="0" (keydown)="checkKeyboardPress($event, '/blogs')">
+        <a mat-list-item (click)="navigate('/blogs')">
+          <span class="entry">
+            <mat-icon>library_books</mat-icon>
+            <span *ngIf="!isCollapsed">Blogs</span>
+          </span>
+        </a>
+      </mat-nav-list>
+  
+      <mat-nav-list tabindex="0" aria-label="Reports"  tabindex="0" (keydown)="checkKeyboardPress($event, '/reports')">
+        <a mat-list-item (click)="navigate('/reports')">
+          <span class="entry">
+            <mat-icon>query_stats</mat-icon>
+            <span *ngIf="!isCollapsed">Reports</span>
+          </span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <!-- class="ms-0 pt-0" -->
+    <mat-sidenav-content>
+        <router-outlet />
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 
